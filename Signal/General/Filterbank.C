@@ -416,6 +416,18 @@ void dsp::Filterbank::resize_output (bool reserve_extra)
          << " reserve=" << reserve_extra << " nkeep=" << nkeep
          << " npart=" << npart << " output ndat=" << output_ndat << endl;
 
+<<<<<<< HEAD
+=======
+#if DEBUGGING_OVERLAP
+  // this exception is useful when debugging, but not at the end-of-file
+  if ( !has_buffering_policy() && ndat > 0
+       && (nsamp_step*npart + nsamp_overlap != ndat) )
+    throw Error (InvalidState, "dsp::Filterbank::reserve",
+                 "npart=%u * step=%u + overlap=%u != ndat=%u",
+		 npart, nsamp_step, nsamp_overlap, ndat);
+#endif
+
+>>>>>>> demorest/master
   // prepare the output TimeSeries
   prepare_output (output_ndat, true);
 }
