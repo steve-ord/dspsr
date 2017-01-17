@@ -402,8 +402,8 @@ void dsp::Filterbank::resize_output (bool reserve_extra)
     npart = (ndat-nsamp_overlap)/nsamp_step;
 
   // on some iterations, ndat could be large enough to fit an extra part
-  if (reserve_extra)
-    npart ++;
+  if (reserve_extra && has_buffering_policy())
+    npart += 2;
 
   // points kept from each small fft
   unsigned nkeep = freq_res - nfilt_tot;

@@ -90,6 +90,8 @@ static std::string get_sigproc_telescope_name (int _id)
       return "Effelsberg";
     case 11:
       return "LOFAR";
+    case 12:
+      return "VLA";
     default:
       return "unknown";
       break;
@@ -124,6 +126,7 @@ static int get_sigproc_telescope_id (string name)
     else if (itoa == "GM") return 7;
     else if (itoa == "EF") return 8;
     else if (itoa == "LF") return 11;
+    else if (itoa == "VL") return 12;
     else return 0;
   }
   catch (Error &error)
@@ -192,11 +195,14 @@ void dsp::SigProcObservation::load_global ()
 
   // set_ndat (nsamples);
 
-  if (nifs ==1)
+  if (nifs == 1)
     set_state( Signal::Intensity );
 
+  if (nifs == 2)
+    set_state( Signal::PPQQ );
+
   if (nifs == 4)
-    set_state( Signal::Stokes );
+    set_state( Signal::Coherence );
 
   set_rate( 1.0/tsamp );
   set_start_time( tstart );
